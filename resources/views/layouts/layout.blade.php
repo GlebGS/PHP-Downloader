@@ -22,10 +22,18 @@
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/user/id={{$id}}">Home <span class="sr-only">(current)</span></a>
+                @if($id)
+                    <a class="nav-link" href="/user/id={{$id}}">Home <span class="sr-only">(current)</span></a>
+                @else
+                    <span class="nav-link">Home</span>
+                @endif
             </li>
             <li class="nav-item">
+                @if($id)
                 <a class="nav-link" href="/user/download/id={{$id}}">Скачать файл</a>
+                @else
+                    <span class="nav-link">Скачать файл</span>
+                @endif
             </li>
         </ul>
         <span class="navbar-text">

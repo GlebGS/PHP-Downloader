@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
 
-    public function addUser(Request $request){
+    public function addUser(Request $request)
+    {
         $this->validate($request, [
             'name' => ['required', 'string', 'min:3', 'max:20'],
             'email' => ['required', 'email', 'unique:users,email'],
@@ -30,7 +31,8 @@ class UserController extends Controller
             ->with('success', 'Регистрация прошла успешно.');
     }
 
-    public function logUser(Request $request){
+    public function logUser(Request $request)
+    {
 
         $this->validate($request, [
             'email' => ['required', 'email'],
@@ -40,7 +42,7 @@ class UserController extends Controller
         $data = $request->only(['email', 'password']);
         $user = User::findUser('users', $data);
 
-        if ($user){
+        if ($user) {
             $id = User::findUser('users', $data)->id;
 
             if (Auth::attempt($data)) {
@@ -52,13 +54,16 @@ class UserController extends Controller
             ->with('error', 'Не верно введён Email или Пароль.');
     }
 
-    public function edit(Request $request){
+    public function edit(Request $request)
+    {
 
-        $path = $request->file('file')->store('upload', 'public');
         $id = $request->id;
 
-        if ($path){
+        if ($request->file('file')) {
+            $path = $request->file('file')->store('upload', 'public');
+
             User::edit('users', $id, ['img' => '/storage/' . $path]);
+
         }
 
         $data = [
@@ -72,13 +77,15 @@ class UserController extends Controller
             ->with('success', 'Профиль был успешно изменён.');
     }
 
-    public function delete(Request $request){
+    public function delete(Request $request)
+    {
         User::deleteUser('users', $request->id);
         return back()
             ->with('success', 'Успешное удаление');
     }
 
-    public function deleteFile(Request $request){
+    public function deleteFile(Request $request)
+    {
         User::deleteFile('files', $request->id);
         return back()
             ->with('success', 'Файл успешно удалён');

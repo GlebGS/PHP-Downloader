@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Models\User;
+use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -41,19 +42,30 @@ class ImageController extends Controller
 
     public function downloadUrl(Request $request)
     {
+        $file_url = $request->url;
+        $file_name = basename($file_url);
 
-        $file = $request->url;
-//        $headers = [
-//            "Cache-Control: public",
-//            "Content-Description: File Transfer",
-//            "Content-Description: attachment; filename=$file",
-//            "Content-Type: application/pdf",
-//            "Content-Type: application/zip",
-//            "Content-Type: application/png",
-//            "Content-Transfer-Encoding: binary",
-//        ];
+        header("Cache-Control: public");
+        header("Content-Description: File Transfer");
+        header("Content-Disposition: attachment; filename=$file_name");
+        header("Content-Type: application/zip");
+        header("Content-Type: application/pdf");
+        header("Content-Transfer-Encoding: binary");
 
-        Storage::download($file);
+        readfile($file_url);
+    }
+
+    public function editAvatar(Request $request){
+        $id = $request->id;
+
+        $path = $request->file('file')->store('upload', 'public');
+
+        if ($path){
+            User::edit('users', $id, ['img' => '/storage/' . $path]);
+        }
+
+        return back()
+            ->with('success', 'Профиль был успешно изменён.');
     }
 
 }

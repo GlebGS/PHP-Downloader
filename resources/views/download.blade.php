@@ -4,6 +4,8 @@
 
     <div class="col-lg-2"></div>
     <div class="col-lg-4 mt-5">
+
+
         <form method="post" action="{{route('downloadUrl')}}" enctype="multipart/form-data">
 
             @csrf

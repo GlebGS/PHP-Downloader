@@ -29,4 +29,5 @@ Route::post('/add', 'App\Http\Controllers\UserController@addUser');
 Route::post('/log', 'App\Http\Controllers\UserController@logUser');
 Route::post('/downloadUrl', 'App\Http\Controllers\ImageController@downloadUrl')->name('downloadUrl');
 Route::post('/editUser/id={id}', 'App\Http\Controllers\UserController@edit');
+Route::post('/editAvatar/id={id}', 'App\Http\Controllers\ImageController@editAvatar');
 Route::post('/image/upload', 'App\Http\Controllers\ImageController@upload')->name('image.upload');
