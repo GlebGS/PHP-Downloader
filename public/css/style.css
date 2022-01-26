@@ -1,0 +1,23 @@
+.profile{
+    margin-right: 6rem;
+}
+
+.avatar{
+    height: 50px;
+    width: 50px;
+    border-radius: 0;
+}
+
+.img_up{
+    width: 15rem;
+    height: 10rem;
+}
+
+.title{
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.footer{
+    margin-top: 10rem;
+}
