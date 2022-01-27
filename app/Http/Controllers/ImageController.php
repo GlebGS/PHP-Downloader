@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProgressBar;
 use App\Models\File;
 use App\Models\User;
 use Illuminate\Http\Client\Response;
@@ -18,7 +19,7 @@ class ImageController extends Controller
         $path = $request->file('file')->store('upload', 'public');
 
         $data = [
-            'url' => '/storage/' . $path,
+            'url' => '/storage/upload/' . basename($path),
         ];
 
         File::addFile('files', $data);
@@ -33,9 +34,8 @@ class ImageController extends Controller
 
     public function downloadFile(Request $request)
     {
-
         $url = File::findFile('files', $request->id);
-        $path = '/public' . substr($url->url, 8);
+        $path = 'public/upload/' . substr($url->url, 15);
 
         return Storage::download($path);
     }
